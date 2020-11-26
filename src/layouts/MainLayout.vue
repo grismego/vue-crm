@@ -11,9 +11,9 @@
     </main>
 
     <div class="fixed-action-btn">
-      <a class="btn-floating btn-large blue" href="#">
+      <router-link class="btn-floating btn-large blue" to="/record">
         <i class="large material-icons">add</i>
-      </a>
+      </router-link>
     </div>
   </div>
 </template>
@@ -21,6 +21,7 @@
 <script>
 import NavBar from "../components/app/NavBar";
 import SideBar from "../components/app/SideBar";
+
 export default {
   name: "main-layout",
   data: () => ({
