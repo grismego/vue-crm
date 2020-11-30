@@ -47,10 +47,11 @@
         <small
           v-else-if="$v.password.$dirty && !$v.password.minLength"
           class="helper-text invalid"
-          >Длинна пароля должна быть больше
-          {{ $v.password.$params.minLength.min }} символов. Сейчас он
-          {{ password.length }}</small
         >
+          Длинна пароля должна быть больше
+          {{ $v.password.$params.minLength.min }} символов. Сейчас он
+          {{ password.length }}
+        </small>
       </div>
       <div class="input-field">
         <input
@@ -108,7 +109,7 @@ export default {
     isAgree: { checked: v => v }
   },
   methods: {
-    submitHandler() {
+    async submitHandler() {
       if (this.$v.$invalid) {
         this.$v.$touch();
         return;
@@ -120,9 +121,12 @@ export default {
         name: this.name
       };
 
-      console.log(formData);
-
-      this.$router.push("/");
+      try {
+        await this.$store.dispatch("register", formData);
+        this.$router.push("/");
+      } catch (e) {
+        console.log(e);
+      }
     }
   }
 };
