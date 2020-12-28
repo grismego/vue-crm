@@ -1,13 +1,13 @@
-import M from "materialize-css";
+import M from 'materialize-css'
 
 export default {
   install(Vue) {
     Vue.prototype.$message = function(html) {
-      M.toast({ html });
-    };
+      M.toast({ html })
+    }
 
     Vue.prototype.$error = function(html) {
-      M.toast({ html: `[Error]: ${html}` });
-    };
+      M.toast({ html: `[Error]: ${html}` })
+    }
   }
-};
+}

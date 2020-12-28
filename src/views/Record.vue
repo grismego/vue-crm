@@ -80,7 +80,7 @@
       </div>
 
       <button class="btn waves-effect waves-light" type="submit">
-        Создать
+        {{ $t('create') }}
         <i class="material-icons right">send</i>
       </button>
     </form>
@@ -88,91 +88,91 @@
 </template>
 
 <script>
-import M from "materialize-css";
-import Loader from "../components/app/Loader.vue";
-import { required, minValue } from "vuelidate/lib/validators";
-import { mapGetters } from "vuex";
+import M from 'materialize-css'
+import Loader from '../components/app/Loader.vue'
+import { required, minValue } from 'vuelidate/lib/validators'
+import { mapGetters } from 'vuex'
 export default {
   components: { Loader },
-  name: "record",
+  name: 'record',
   data: () => ({
     loading: true,
     select: null,
     categories: [],
     category: null,
-    type: "outcome",
+    type: 'outcome',
     amount: 1,
-    description: ""
+    description: ''
   }),
   async mounted() {
-    this.categories = await this.$store.dispatch("fetchCategories");
-    this.loading = false;
+    this.categories = await this.$store.dispatch('fetchCategories')
+    this.loading = false
 
     if (this.categories.length) {
-      this.category = this.categories[0].id;
+      this.category = this.categories[0].id
     }
 
     setTimeout(() => {
-      this.select = M.FormSelect.init(this.$refs.select);
-      M.updateTextFields();
-    }, 0);
+      this.select = M.FormSelect.init(this.$refs.select)
+      M.updateTextFields()
+    }, 0)
   },
   computed: {
-    ...mapGetters(["info"]),
+    ...mapGetters(['info']),
     canCreateRecord() {
-      if (this.type === "income") {
-        return true;
+      if (this.type === 'income') {
+        return true
       }
 
-      return this.info.bill >= this.amount;
+      return this.info.bill >= this.amount
     }
   },
   methods: {
     async submitHandler() {
       if (this.$v.$invalid) {
-        this.$v.$touch();
-        return;
+        this.$v.$touch()
+        return
       }
 
       if (this.canCreateRecord) {
         try {
-          await this.$store.dispatch("createRecord", {
+          await this.$store.dispatch('createRecord', {
             categoryId: this.category,
             amount: this.amount,
             description: this.description,
             type: this.type,
             date: new Date().toJSON()
-          });
+          })
           const bill =
-            this.type === "income"
+            this.type === 'income'
               ? this.info.bill + this.amount
-              : this.info.bill - this.amount;
+              : this.info.bill - this.amount
 
-          await this.$store.dispatch("updateInfo", {
+          await this.$store.dispatch('updateInfo', {
             bill
-          });
-          this.$message("Запись успешно создана");
-          this.$v.$reset();
-          this.amount = 1;
-          this.description = "";
+          })
+          this.$message('Запись успешно создана')
+          this.$v.$reset()
+          this.amount = 1
+          this.description = ''
         } catch (e) {
-          throw new Error(e);
+          throw new Error(e)
         }
       } else {
         this.$message(
           `Недостаточно средств на счете (${this.amount - this.info.bill})`
-        );
+        )
       }
     }
   },
   destroyed() {
     if (this.select && this.select.destroy) {
-      this.select.destroy();
+      this.select.destroy()
     }
   },
   validations: {
     amount: { minValue: minValue(1) },
     description: { required }
   }
-};
+}
 </script>

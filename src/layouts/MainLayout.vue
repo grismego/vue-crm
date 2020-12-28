@@ -26,33 +26,33 @@
 </template>
 
 <script>
-import Loader from "../components/app/Loader.vue";
-import NavBar from "../components/app/NavBar";
-import SideBar from "../components/app/SideBar";
-import messages from "@/utils/messages";
+import Loader from '../components/app/Loader.vue'
+import NavBar from '../components/app/NavBar'
+import SideBar from '../components/app/SideBar'
+import messages from '@/utils/messages'
 
 export default {
-  name: "main-layout",
+  name: 'main-layout',
   data: () => ({
     isOpen: true,
     loading: true
   }),
   async mounted() {
     if (!Object.keys(this.$store.getters.info).length) {
-      await this.$store.dispatch("fetchInfo");
+      await this.$store.dispatch('fetchInfo')
     }
 
-    this.loading = false;
+    this.loading = false
   },
   computed: {
     error() {
-      return this.$store.getters.error;
+      return this.$store.getters.error
     }
   },
   watch: {
     error(fbError) {
-      console.log(fbError);
-      this.$error(messages[fbError.code] || "Что-то пошло не так");
+      console.log(fbError)
+      this.$error(messages[fbError.code] || 'Что-то пошло не так')
     }
   },
   components: {
@@ -60,5 +60,5 @@ export default {
     SideBar,
     Loader
   }
-};
+}
 </script>

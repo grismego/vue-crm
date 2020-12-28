@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="page-title">
-      <h3>Счет</h3>
+      <h3>{{ $t('bill') }}</h3>
 
       <button class="btn waves-effect waves-light btn-small" @click="refresh">
         <i class="material-icons">refresh</i>
@@ -18,25 +18,25 @@
 </template>
 
 <script>
-import HomeBill from "@/components/HomeBill";
-import HomeCurrency from "@/components/HomeCurrency";
-import Loader from "../components/app/Loader.vue";
+import HomeBill from '@/components/HomeBill'
+import HomeCurrency from '@/components/HomeCurrency'
+import Loader from '../components/app/Loader.vue'
 
 export default {
-  name: "Home",
+  name: 'Home',
   data: () => ({
     loading: true,
     currency: null
   }),
   async mounted() {
-    this.currency = await this.$store.dispatch("fetchCurrency");
-    this.loading = false;
+    this.currency = await this.$store.dispatch('fetchCurrency')
+    this.loading = false
   },
   methods: {
     async refresh() {
-      this.loading = true;
-      this.currency = await this.$store.dispatch("fetchCurrency");
-      this.loading = false;
+      this.loading = true
+      this.currency = await this.$store.dispatch('fetchCurrency')
+      this.loading = false
     }
   },
   components: {
@@ -44,5 +44,5 @@ export default {
     HomeCurrency,
     Loader
   }
-};
+}
 </script>

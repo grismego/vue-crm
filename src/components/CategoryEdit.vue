@@ -55,8 +55,8 @@
 </template>
 
 <script>
-import M from "materialize-css";
-import { required, minValue } from "vuelidate/lib/validators";
+import M from 'materialize-css'
+import { required, minValue } from 'vuelidate/lib/validators'
 
 export default {
   props: {
@@ -66,50 +66,50 @@ export default {
     }
   },
   mounted() {
-    M.updateTextFields();
-    this.select = M.FormSelect.init(this.$refs.select);
+    M.updateTextFields()
+    this.select = M.FormSelect.init(this.$refs.select)
   },
   destroyed() {
     if (this.select && this.select.destroy) {
-      this.select.destroy();
+      this.select.destroy()
     }
   },
   data: () => ({
-    title: "",
+    title: '',
     limit: 100,
     select: null,
     current: null
   }),
   watch: {
     current(catId) {
-      const { title, limit } = this.categories.find(c => c.id === catId);
-      this.title = title;
-      this.limit = limit;
+      const { title, limit } = this.categories.find(c => c.id === catId)
+      this.title = title
+      this.limit = limit
     }
   },
   created() {
-    const { title, id, limit } = this.categories[0];
-    this.current = id;
-    this.title = title;
-    this.limit = limit;
+    const { title, id, limit } = this.categories[0]
+    this.current = id
+    this.title = title
+    this.limit = limit
   },
   methods: {
     async submitHandler() {
       if (this.$v.$invalid) {
-        this.$v.$touch();
-        return;
+        this.$v.$touch()
+        return
       }
       try {
         const categoryData = {
           id: this.current,
           title: this.title,
           limit: this.limit
-        };
-        await this.$store.dispatch("updateCategory", categoryData);
-        this.$message("Категория успешно обновлена");
-        this.$emit("updated", categoryData);
+        }
+        await this.$store.dispatch('updateCategory', categoryData)
+        this.$message('Категория успешно обновлена')
+        this.$emit('updated', categoryData)
       } catch (e) {
-        throw new Error(e);
+        throw new Error(e)
       }
     }
   },
@@ -117,5 +117,5 @@ export default {
     title: { required },
     limit: { minValue: minValue(100) }
   }
-};
+}
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="page-title">
-      <h3>Категории</h3>
+      <h3>{{ $t('categories') }}</h3>
     </div>
     <section>
       <Loader v-if="loading" />
@@ -21,11 +21,11 @@
 </template>
 
 <script>
-import Loader from "../components/app/Loader.vue";
-import CategoryCreate from "../components/CategoryCreate";
-import CategoryEdit from "../components/CategoryEdit";
+import Loader from '../components/app/Loader.vue'
+import CategoryCreate from '../components/CategoryCreate'
+import CategoryEdit from '../components/CategoryEdit'
 export default {
-  name: "categories",
+  name: 'categories',
   components: {
     CategoryCreate,
     CategoryEdit,
@@ -37,20 +37,20 @@ export default {
     updateCount: 0
   }),
   async mounted() {
-    this.categories = await this.$store.dispatch("fetchCategories");
-    this.loading = false;
-    console.log(this.categories);
+    this.categories = await this.$store.dispatch('fetchCategories')
+    this.loading = false
+    console.log(this.categories)
   },
   methods: {
     addNewCategories(category) {
-      this.categories.push(category);
+      this.categories.push(category)
     },
     udpateCategories(category) {
-      const idx = this.categories.findIndex(c => c.id === category.id);
-      this.categories[idx].title = category.title;
-      this.categories[idx].limit = category.limit;
-      this.updateCount++;
+      const idx = this.categories.findIndex(c => c.id === category.id)
+      this.categories[idx].title = category.title
+      this.categories[idx].limit = category.limit
+      this.updateCount++
     }
   }
-};
+}
 </script>

@@ -70,14 +70,14 @@
 </template>
 
 <script>
-import { email, required, minLength } from "vuelidate/lib/validators";
-import messages from "../utils/messages";
+import { email, required, minLength } from 'vuelidate/lib/validators'
+import messages from '../utils/messages'
 
 export default {
-  name: "login",
+  name: 'login',
   data: () => ({
-    email: "",
-    password: ""
+    email: '',
+    password: ''
   }),
   validations: {
     email: { email, required },
@@ -85,27 +85,27 @@ export default {
   },
   mounted() {
     if (messages[this.$route.query.message]) {
-      this.$message(messages[this.$route.query.message]);
+      this.$message(messages[this.$route.query.message])
     }
   },
   methods: {
     async submitHandler() {
       if (this.$v.$invalid) {
-        this.$v.$touch();
-        return;
+        this.$v.$touch()
+        return
       }
       const formData = {
         email: this.email,
         password: this.password
-      };
+      }
 
       try {
-        await this.$store.dispatch("login", formData);
-        this.$router.push("/");
+        await this.$store.dispatch('login', formData)
+        this.$router.push('/')
       } catch (e) {
-        console.log(e);
+        console.log(e)
       }
     }
   }
-};
+}
 </script>

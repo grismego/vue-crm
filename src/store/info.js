@@ -1,4 +1,4 @@
-import firebase from "firebase/app";
+import firebase from 'firebase/app'
 
 export default {
   state: {
@@ -6,43 +6,43 @@ export default {
   },
   mutations: {
     setInfo(state, info) {
-      state.info = info;
+      state.info = info
     },
     clearInfo(state) {
-      state.info = {};
+      state.info = {}
     }
   },
   actions: {
     async fetchInfo({ dispatch, commit }) {
       try {
-        const uid = await dispatch("getUid");
+        const uid = await dispatch('getUid')
         const info = (
           await firebase
             .database()
             .ref(`/users/${uid}/info`)
-            .once("value")
-        ).val();
-        commit("setInfo", info);
+            .once('value')
+        ).val()
+        commit('setInfo', info)
       } catch (e) {
-        throw new Error(e);
+        throw new Error(e)
       }
     },
     async updateInfo({ dispatch, commit, getters }, toUpdate) {
       try {
-        const uid = await dispatch("getUid");
-        const updateData = { ...getters.info, ...toUpdate };
+        const uid = await dispatch('getUid')
+        const updateData = { ...getters.info, ...toUpdate }
         await firebase
           .database()
           .ref(`/users/${uid}/info`)
-          .update(updateData);
-        commit("setInfo", updateData);
+          .update(updateData)
+        commit('setInfo', updateData)
       } catch (e) {
-        commit("setError", e);
-        throw new Error(e);
+        commit('setError', e)
+        throw new Error(e)
       }
     }
   },
   getters: {
     info: state => state.info
   }
-};
+}
